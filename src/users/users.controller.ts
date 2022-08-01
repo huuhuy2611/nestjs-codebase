@@ -6,36 +6,40 @@ import {
   Patch,
   Param,
   Delete,
-  Redirect,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
+import { User } from './entities/user.entity';
 
+@ApiTags('User')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @ApiCreatedResponse({ type: User })
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
-  // return with {url: ...} will override url in Redirect
+  @ApiOkResponse({ type: User, isArray: true })
+  @ApiQuery({ name: 'name', required: false })
   @Get()
-  @Redirect(
-    'https://docs.nestjs.com/controllers#:~:text=nest%20g%20controller%20cats%20command',
-  )
-  findAll() {
-    return {
-      url: 'https://gitlab.com/oddle-team/dine-in/oddle-dinein-frontend-test/-/tree/main/cypress/support/custom-commands/host',
-    };
-    // return this.usersService.findAll();
+  findAll(@Query('name') name?: string) {
+    return this.usersService.findAll(name);
   }
 
+  @ApiOkResponse({ type: User, description: 'ahahah' })
   @Get(':id')
-  findOne(@Param() params) {
-    const { id } = params;
+  findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
