@@ -1,15 +1,17 @@
-import { User } from 'src/users/entities/user.entity';
-import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-const config: MysqlConnectionOptions = {
+const config: TypeOrmModuleOptions = {
   type: 'mysql',
   host: 'localhost',
   port: 3306,
   username: 'root',
   password: 'password',
   database: 'nestjs',
-  entities: [User],
-  synchronize: true,
+  synchronize: false,
+  autoLoadEntities: true,
+  migrations: ['dist/src/migrations/*{.ts,.js}'],
+  migrationsTableName: 'migrations_typeorm',
+  migrationsRun: true,
 };
 
-export default config;
+export = config;
