@@ -7,7 +7,7 @@ const config: TypeOrmModuleOptions = {
   username: 'root',
   password: 'password',
   database: 'nestjs',
-  synchronize: false,
+  synchronize: true,
   autoLoadEntities: true,
   migrations: ['dist/src/migrations/*{.ts,.js}'],
   migrationsTableName: 'migrations_typeorm',

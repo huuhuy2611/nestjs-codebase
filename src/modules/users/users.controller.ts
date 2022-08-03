@@ -1,7 +1,8 @@
-import { Controller, Get, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Body, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { User } from './user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @ApiTags('User')
 @Controller('users')
@@ -19,6 +20,11 @@ export class UsersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
+  }
+
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 
   @Delete(':id')
