@@ -10,7 +10,10 @@ export class User {
   name: string;
 
   @Column()
-  age: number;
+  username: string;
+
+  @Column()
+  password: string;
 
   @OneToMany(() => Article, (article) => article.owner)
   articles: Article[];
