@@ -1,3 +1,4 @@
+import { Role } from 'src/constants/role.constant';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Article } from '../article/article.entity';
 
@@ -14,6 +15,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column()
+  role: Role;
 
   @OneToMany(() => Article, (article) => article.owner)
   articles: Article[];
